@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import Button from "@mui/material/Button";
 import LoginImage from "../images/login.png";
@@ -67,12 +65,12 @@ function Login() {
                     />
                     <Box sx={{ display: "flex", gap: 2 }}>
                       <FormControl>
-                        <a
-                          href="#"
+                        <Link
+                          to="#"
                           style={{ fontSize: "0.8rem", textDecoration: "none" }}
                         >
                           Forgot Password
-                        </a>
+                        </Link>
                       </FormControl>
                       <FormControl>
                         <a

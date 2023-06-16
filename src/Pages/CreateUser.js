@@ -49,7 +49,7 @@ const CreateUser = () => {
         <Stepper
           activeStep={activeStep}
           alternativeLabel
-          style={{ marginLeft: "-150px", width: "100%" }}
+          style={{ marginLeft: "-130px", width: "100%" }}
         >
           {steps.map((label, index) => (
             <Step key={label}>
@@ -72,8 +72,8 @@ const CreateUser = () => {
 
       <div>
         {activeStep === steps.length ? (
-          <Typography variant="h5">
-            Thank you for submitting the form.
+          <Typography variant="h5" sx={{ mt: 7 }}>
+            User Created Successfully!!!.
           </Typography>
         ) : (
           <div style={{ marginLeft: "auto" }}>
@@ -90,21 +90,23 @@ const CreateUser = () => {
               }}
             >
               <Button
+                variant="contained"
                 onClick={handleNext}
                 sx={{
                   marginRight: "30px",
-                  backgroundColor: "#ec5a02",
+                  backgroundColor: "#ff3d00",
                   color: "white",
                 }}
               >
                 {activeStep === steps.length - 1 ? "Submit" : "Save & Next"}
               </Button>
               <Button
+                variant="contained"
                 disabled={activeStep === 0}
                 onClick={handleBack}
                 style={{
                   marginRight: "70px",
-                  backgroundColor: "#ec5a02",
+                  backgroundColor: "#ff3d00",
                   color: "white",
                 }}
               >
@@ -122,7 +124,7 @@ const CreateUser = () => {
 const Step1Form = () => {
   return (
     <>
-      <div className="mt-3 mx-3 d-flex">
+      <div className="mt-4 mx-3 d-flex">
         <Autocomplete
           disablePortal
           id="combo-box-demo"
@@ -362,4 +364,3 @@ const Step3Form = () => {
 };
 
 export default CreateUser;
-//#f2880b

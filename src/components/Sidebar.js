@@ -16,9 +16,6 @@ import CampaignIcon from "@mui/icons-material/Campaign";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LanIcon from "@mui/icons-material/Lan";
 import { Link } from "react-router-dom";
-//css
-import "../components/Sidebar.css";
-//
 import LoginInfo from "./LoginInfo";
 import { useLocation } from "react-router-dom";
 import MainRoutes from "../Routes/MainRoutes";
@@ -167,6 +164,7 @@ export default function Sidebar() {
               >
                 <img
                   src={logo}
+                  alt="logo"
                   width="30px"
                   height="auto"
                   style={{
