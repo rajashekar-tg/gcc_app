@@ -42,7 +42,7 @@ const CreateUser = () => {
       }}
     >
       <CardContent
-        sx={{ fontSize: 14, backgroundColor: "#f5f5f5", height: "11vh" }}
+        sx={{ fontSize: 14, backgroundColor: "#f5f5f5", height: "12vh" }}
         color="text.secondary"
         gutterBottom
       >

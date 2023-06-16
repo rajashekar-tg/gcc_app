@@ -39,7 +39,7 @@ export default function MyProfile() {
             autoComplete="on"
           >
             <Grid container>
-              <Grid item xs={5}>
+              <Grid item xs={6}>
                 <FormControl
                   variant="standard"
                   sx={{ width: 500, marginTop: "10px" }}
@@ -51,7 +51,7 @@ export default function MyProfile() {
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={6}>
                 <FormControl
                   variant="standard"
                   sx={{ width: 500, marginTop: "10px" }}
@@ -59,7 +59,7 @@ export default function MyProfile() {
                   <TextField id="lastName" name="lastName" label="Last Name*" />
                 </FormControl>
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={6}>
                 <FormControl
                   variant="standard"
                   sx={{ width: 500, marginTop: "10px" }}
@@ -71,7 +71,7 @@ export default function MyProfile() {
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={6}>
                 <FormControl
                   variant="standard"
                   sx={{ width: 500, marginTop: "10px" }}
@@ -125,7 +125,7 @@ export default function MyProfile() {
             autoComplete="on"
           >
             <Grid container>
-              <Grid item xs={5}>
+              <Grid item xs={6}>
                 <FormControl variant="standard" sx={{ width: 500 }}>
                   <TextField
                     id="oldPassword"
@@ -134,7 +134,7 @@ export default function MyProfile() {
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={6}>
                 <FormControl variant="standard" sx={{ width: 500 }}>
                   <TextField
                     id="newPassword"
@@ -143,7 +143,7 @@ export default function MyProfile() {
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={6}>
                 <FormControl
                   variant="standard"
                   sx={{ width: 500, marginTop: "20px" }}
@@ -189,7 +189,7 @@ export default function MyProfile() {
             autoComplete="on"
           >
             <Grid container>
-              <Grid item xs={5}>
+              <Grid item xs={6}>
                 <FormControl sx={{ width: 500 }}>
                   <InputLabel>Question Number 1</InputLabel>
                   <Select
@@ -216,7 +216,7 @@ export default function MyProfile() {
                   <TextField id="answer" name="answer" label="answer*" />
                 </FormControl>
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={6}>
                 <FormControl sx={{ width: 500 }}>
                   <InputLabel>Question Number 2</InputLabel>
                   <Select
@@ -243,7 +243,7 @@ export default function MyProfile() {
                   <TextField id="answer" name="answer" label="answer*" />
                 </FormControl>
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={6}>
                 <FormControl sx={{ width: 500 }} style={{ marginTop: "20px" }}>
                   <InputLabel>Question Number 3</InputLabel>
                   <Select
