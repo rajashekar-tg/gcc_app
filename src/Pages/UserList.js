@@ -8,6 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link } from "react-router-dom";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import SearchIcon from "@mui/icons-material/Search";
+import TextField from "@mui/material/TextField";
+import { useState } from "react";
 
 const columns = [
   { id: "userName", label: "User Name", minWidth: 170 },
@@ -185,8 +189,9 @@ const rows = [
 ];
 
 export default function UserList() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [searchText, setSearchText] = useState("");
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -197,12 +202,58 @@ export default function UserList() {
     setPage(0);
   };
 
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
   return (
     <>
-      <div style={{ float: "right", marginBottom: "30px" }}>
-        <Link to="/users/createuser">
-          <button className="btn btn-outline-danger ">Create User</button>
-        </Link>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div role="presentation">
+          <Breadcrumbs
+            aria-label="breadcrumb"
+            separator="›"
+            sx={{ fontSize: "15px", fontWeight: "bold" }}
+          >
+            <Link
+              style={{ textDecoration: "none", color: "#9370DB" }}
+              to="/users"
+            >
+              Home
+            </Link>
+            <Link
+              color="primary"
+              style={{ textDecoration: "none" }}
+              aria-current="page"
+              to="/users/listuser"
+            >
+              UserList
+            </Link>
+          </Breadcrumbs>
+        </div>
+        <div style={{ float: "right", marginBottom: "30px" }}>
+          <>
+            <div>
+              <TextField
+                label="Search"
+                value={searchText}
+                onChange={handleSearchChange}
+                variant="outlined"
+                size="small"
+                InputProps={{
+                  startAdornment: (
+                    <endAdornment>
+                      <SearchIcon />
+                    </endAdornment>
+                  ),
+                }}
+              />
+              <Link to="/users/createuser" style={{ marginLeft: "10px" }}>
+                <button className="btn btn-outline-danger ">Create User</button>
+              </Link>
+            </div>
+          </>
+        </div>
       </div>
 
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -269,167 +320,3 @@ export default function UserList() {
     </>
   );
 }
-// import * as React from "react";
-// import { DataGrid } from "@mui/x-data-grid";
-// import { Link } from "react-router-dom";
-
-// const columns = [
-//   { field: "UserName", headerName: "User Name", width: 170 },
-//   { field: "CustomerName", headerName: "Customer Name", width: 190 },
-//   { field: "DisplayName", headerName: "Display Name", width: 240 },
-//   {
-//     field: "CreatedDate",
-//     headerName: "Created Date",
-//     width: 190,
-//   },
-//   {
-//     field: "LastLogin",
-//     headerName: "Last Login",
-//     description: "This column has a value getter and is not sortable.",
-//     width: 190,
-//     valueGetter: (params) =>
-//       `${params.row.CreatedDate || ""} ${params.CreatedDate || ""}`,
-//   },
-//   {
-//     field: "Action",
-//     headerName: "Action",
-//     width: 190,
-//     renderCell: (params) => (
-//       <button
-//         className="btn btn-danger btn-sm"
-//         variant="contained"
-//         color="secondary"
-//       >
-//         Click
-//       </button>
-//     ),
-//   },
-// ];
-
-// const rows = [
-//   {
-//     id: 1,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-//   {
-//     id: 2,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-//   {
-//     id: 3,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-//   {
-//     id: 4,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-//   {
-//     id: 5,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-//   {
-//     id: 6,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-//   {
-//     id: 7,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-//   {
-//     id: 8,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-//   {
-//     id: 9,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-//   {
-//     id: 10,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-//   {
-//     id: 11,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-//   {
-//     id: 12,
-//     UserName: "Susan",
-//     CustomerName: "Snow",
-//     DisplayName: "snow",
-//     CreatedDate: "10-09-2023",
-//     LastLogin: "10-09-2023",
-//   },
-// ];
-
-// export default function UserList() {
-//   return (
-//     <>
-//       <div
-//         style={{ display: "flex", alignItems: "center", justifyContent:'' }}
-//       >
-//         <Link to="/users/createuser">
-//           <button className="btn btn-outline-danger">Create User</button>
-//         </Link>
-//       </div>
-//       <div
-//         style={{ height: 310, width: "100%", marginTop: "40px", flexGrow: "1" }}
-//       >
-//         <DataGrid
-//           rows={rows}
-//           columns={columns}
-//           getRowHeight={() => 40}
-//           initialState={{
-//             pagination: {
-//               paginationModel: { page: 0, pageSize: 5 },
-//             },
-//           }}
-//           pageSizeOptions={[5, 10]}
-//         />
-//       </div>
-//     </>
-//   );
-// }

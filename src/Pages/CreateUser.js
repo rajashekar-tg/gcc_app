@@ -17,6 +17,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import SettingsIcon from "@mui/icons-material/Settings";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import VideoLabelIcon from "@mui/icons-material/VideoLabel";
+import { Link } from "react-router-dom";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 
 const steps = ["User Creation", "User Roles", "Message"];
 const icons = [<SettingsIcon />, <GroupAddIcon />, <VideoLabelIcon />];
@@ -33,95 +35,132 @@ const CreateUser = () => {
   };
 
   return (
-    <Card
-      sx={{
-        width: "88%",
-        marginLeft: "10px",
-        marginTop: "20px",
-        height: "500px",
-      }}
-    >
-      <CardContent
-        sx={{ fontSize: 14, backgroundColor: "#f5f5f5", height: "12vh" }}
-        color="text.secondary"
-        gutterBottom
-      >
-        <Stepper
-          activeStep={activeStep}
-          alternativeLabel
-          style={{ marginLeft: "-130px", width: "100%" }}
+    <>
+      <div role="presentation">
+        <Breadcrumbs
+          aria-label="breadcrumb"
+          separator="›"
+          sx={{ fontSize: "15px", fontWeight: "bold" }}
         >
-          {steps.map((label, index) => (
-            <Step key={label}>
-              <StepLabel
-                StepIconComponent={() =>
-                  activeStep > index ? (
-                    <CheckCircleIcon color="primary" />
-                  ) : (
-                    icons[index]
-                  )
-                }
-              >
-                {label}
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-      </CardContent>
-      <Divider sx={{ bgcolor: "secondary.light" }} />
-
-      <div>
-        {activeStep === steps.length ? (
-          <Typography variant="h5" sx={{ mt: 7 }}>
-            User Created Successfully!!!.
-          </Typography>
-        ) : (
-          <div style={{ marginLeft: "auto" }}>
-            {/* Render form components based on the active step */}
-            {activeStep === 0 && <Step1Form />}
-            {activeStep === 1 && <Step2Form />}
-            {activeStep === 2 && <Step3Form />}
-            {/* Buttons for navigating between steps */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                marginTop: "20px",
-              }}
-            >
-              <Button
-                variant="contained"
-                onClick={handleNext}
-                sx={{
-                  marginRight: "30px",
-                  backgroundColor: "#ff3d00",
-                  color: "white",
-                }}
-              >
-                {activeStep === steps.length - 1 ? "Submit" : "Save & Next"}
-              </Button>
-              <Button
-                variant="contained"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                style={{
-                  marginRight: "70px",
-                  backgroundColor: "#ff3d00",
-                  color: "white",
-                }}
-              >
-                Back
-              </Button>
-            </div>
-          </div>
-        )}
+          <Link
+            style={{ textDecoration: "none", color: "#9370DB" }}
+            to="/users"
+          >
+            Home
+          </Link>
+          <Link
+            style={{ textDecoration: "none", color: "#9370DB" }}
+            to="/users/listuser"
+          >
+            Users
+          </Link>
+          <Link
+            color="primary"
+            style={{ textDecoration: "none" }}
+            aria-current="page"
+            to="/users/createuser"
+          >
+            Create User
+          </Link>
+        </Breadcrumbs>
       </div>
-    </Card>
+      <Card
+        sx={{
+          width: "90%",
+          marginLeft: "10px",
+          marginTop: "35px",
+          height: "500px",
+        }}
+      >
+        <CardContent
+          sx={{ fontSize: 14, backgroundColor: "#f5f5f5", height: "12vh" }}
+          color="text.secondary"
+          gutterBottom
+        >
+          <Stepper
+            activeStep={activeStep}
+            alternativeLabel
+            style={{ marginLeft: "-130px", width: "100%" }}
+          >
+            {steps.map((label, index) => (
+              <Step key={label}>
+                <StepLabel
+                  StepIconComponent={() =>
+                    activeStep > index ? (
+                      <CheckCircleIcon color="primary" />
+                    ) : (
+                      icons[index]
+                    )
+                  }
+                >
+                  {label}
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </CardContent>
+        <Divider sx={{ bgcolor: "secondary.light" }} />
+
+        <div>
+          {activeStep === steps.length ? (
+            <Typography variant="h5" sx={{ mt: 7 }}>
+              User Created Successfully!!!.
+            </Typography>
+          ) : (
+            <div style={{ marginLeft: "auto" }}>
+              {/* Render form components based on the active step */}
+              {activeStep === 0 && <Step1Form />}
+              {activeStep === 1 && <Step2Form />}
+              {activeStep === 2 && <Step3Form />}
+              {/* Buttons for navigating between steps */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  marginTop: "20px",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  onClick={handleNext}
+                  sx={{
+                    marginRight: "30px",
+                    backgroundColor: "#ff3d00",
+                    color: "white",
+                  }}
+                >
+                  {activeStep === steps.length - 1 ? "Submit" : "Save & Next"}
+                </Button>
+                <Button
+                  variant="contained"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  style={{
+                    marginRight: "70px",
+                    backgroundColor: "#ff3d00",
+                    color: "white",
+                  }}
+                >
+                  Back
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </Card>
+    </>
   );
 };
 
 // Step 1 form component
 const Step1Form = () => {
+  //1 st form
+  const [selectedUserType, setSelectedUserType] = useState(null);
+
+  const handleUserTypeChange = (event, newValue) => {
+    setSelectedUserType(newValue);
+  };
+  //
   return (
     <>
       <div className="mt-4 mx-3 d-flex">
@@ -130,17 +169,32 @@ const Step1Form = () => {
           id="combo-box-demo"
           options={userTypes}
           sx={{ width: 300 }}
+          value={selectedUserType}
+          onChange={handleUserTypeChange}
           renderInput={(params) => (
             <TextField {...params} label="Select User Type" />
           )}
         />
-        <Checkbox
-          {...label}
-          sx={{ "& .MuiSvgIcon-root": { fontSize: 38, marginLeft: "20px" } }}
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={companyNames}
+          sx={{ width: 300, marginLeft: "14px" }}
+          renderInput={(params) => (
+            <TextField {...params} label="Select Company" />
+          )}
         />
-        <span className="d-flex justify-content-center align-items-center">
-          Is Admin User
-        </span>
+        {selectedUserType?.label === "User" && (
+          <Checkbox
+            {...label}
+            sx={{ "& .MuiSvgIcon-root": { fontSize: 34, marginLeft: "7px" } }}
+          />
+        )}
+        {selectedUserType?.label === "User" && (
+          <span className="d-flex justify-content-center align-items-center">
+            <strong>Is Admin User</strong>
+          </span>
+        )}
       </div>
       <Box
         className="mx-2 mt-2"
@@ -342,7 +396,11 @@ const countries = [
 ];
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const userTypes = [{ label: "User" }, { label: "Admin" }];
-
+const companyNames = [
+  { label: "Innoclique " },
+  { label: "Tek guru " },
+  { label: "Cognitive " },
+];
 // Step 2 form component
 const Step2Form = () => {
   return (

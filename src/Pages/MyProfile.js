@@ -5,21 +5,42 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
-
 import FormControl from "@mui/material/FormControl";
-
 import InputLabel from "@mui/material/InputLabel";
-
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Select, MenuItem } from "@mui/material";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import { Link } from "react-router-dom";
 
 export default function MyProfile() {
   const [selectedValue, setSelectedValue] = useState("");
 
   return (
     <div>
+      <div role="presentation" style={{ margin: "20px" }}>
+        <Breadcrumbs
+          aria-label="breadcrumb"
+          separator="›"
+          sx={{ fontSize: "15px", fontWeight: "bold" }}
+        >
+          <Link
+            style={{ textDecoration: "none", color: "#9370DB" }}
+            to="/users"
+          >
+            Home
+          </Link>
+          <Link
+            color="primary"
+            style={{ textDecoration: "none" }}
+            aria-current="page"
+            to="/users/myprofile"
+          >
+            My Profile
+          </Link>
+        </Breadcrumbs>
+      </div>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

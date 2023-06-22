@@ -14,6 +14,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LanIcon from "@mui/icons-material/Lan";
 import { Link } from "react-router-dom";
 import LoginInfo from "./LoginInfo";
@@ -52,6 +53,11 @@ const SidebarItems = [
     label: "Status",
     path: "/users/status",
     icon: <CheckCircleIcon />,
+  },
+  {
+    label: "Assign ICAN",
+    path: "/users/assign_ican",
+    icon: <HowToRegIcon />,
   },
 ];
 
