@@ -203,13 +203,13 @@ export default function Sidebar() {
                   fontWeight: "bold",
                 }}
               >
-                {pathname === "/users" && "User List"}
+                {/* {pathname === "/users" && "User List"}
                 {pathname === "/users/listuser" && "User List"}
                 {pathname === "/users/customer" && "Customer"}
                 {pathname === "/users/announcements" && "Announcements"}
                 {pathname === "/users/status" && "Status"}
                 {pathname === "/users/myprofile" && "My Profile"}
-                {pathname === "/users/createuser" && "Create User"}
+                {pathname === "/users/createuser" && "Create User"} */}
               </Typography>
               <div style={{ marginLeft: "auto" }}>
                 <img src={icanImg} alt="Logo" />
