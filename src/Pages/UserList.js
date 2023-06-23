@@ -12,7 +12,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
-
+import PermanentDrawer from "./PermenentDrawer";
 const columns = [
   { id: "userName", label: "User Name", minWidth: 170 },
   { id: "customerName", label: "Customer Name", minWidth: 100 },
@@ -248,7 +248,10 @@ export default function UserList() {
                   ),
                 }}
               />
-              <Link to="/users/createuser" style={{ marginLeft: "10px" }}>
+              <Link
+                to="/users/createuser"
+                style={{ marginRight: "70px", marginLeft: "10px" }}
+              >
                 <button className="btn btn-outline-danger ">Create User</button>
               </Link>
             </div>
@@ -256,7 +259,7 @@ export default function UserList() {
         </div>
       </div>
 
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <Paper sx={{ width: "95%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -317,6 +320,7 @@ export default function UserList() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <PermanentDrawer />
     </>
   );
 }
