@@ -9,190 +9,145 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import SearchIcon from "@mui/icons-material/Search";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import PermanentDrawer from "./PermenentDrawer";
-const columns = [
-  { id: "userName", label: "User Name", minWidth: 170 },
-  { id: "customerName", label: "Customer Name", minWidth: 100 },
-  {
-    id: "displayName",
-    label: "Display Name",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+import Typography from "@mui/material/Typography";
+import PropTypes from "prop-types";
+import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import "../Pages/UserList.css";
+import { InputAdornment } from "@mui/material";
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialogContent-root": {
+    padding: theme.spacing(3),
   },
-  {
-    id: "createdDate",
-    label: "Created Date",
-    minWidth: 200,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(1),
   },
-  {
-    id: "lastLogin",
-    label: "Last Login",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toFixed(2),
+  "& .MuiPaper-root": {
+    width: "500px", // Increase the width of the modal
+    maxWidth: "100%",
   },
-  {
-    id: "action",
-    label: "Action",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toFixed(2),
-  },
-];
+}));
 
-function createData(
-  userName,
-  customerName,
-  displayName,
-  createdDate,
-  lastLogin,
-  action
-) {
-  // const density = population / size;
-  return {
-    userName,
-    customerName,
-    displayName,
-    createdDate,
-    lastLogin,
-    action,
-  };
+function BootstrapDialogTitle(props) {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
 }
 
-const rows = [
-  createData(
-    "Susan",
-    "Susan S",
-    1324171354,
-    3287263,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "China",
-    "CN",
-    1403500365,
-    9596961,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "Italy",
-    "IT",
-    60483973,
-    301340,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "United States",
-    "US",
-    327167434,
-    9833520,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">click</button>
-  ),
-  createData(
-    "Canada",
-    "CA",
-    37602103,
-    9984670,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "Australia",
-    "AU",
-    25475400,
-    7692024,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "Germany",
-    "DE",
-    83019200,
-    357578,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "Ireland",
-    "IE",
-    4857000,
-    70273,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "Mexico",
-    "MX",
-    126577691,
-    1972550,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "Japan",
-    "JP",
-    126317000,
-    377973,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "France",
-    "FR",
-    67022000,
-    640679,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "United Kingdom",
-    "GB",
-    67545757,
-    242495,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "Russia",
-    "RU",
-    146793744,
-    17098246,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "Nigeria",
-    "NG",
-    200962417,
-    923768,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
-  createData(
-    "Brazil",
-    "BR",
-    210147125,
-    8515767,
-    "12-87-2022",
-    <button className="btn btn-outline-danger btn-sm">Click</button>
-  ),
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
+
+const tableData = [
+  {
+    id: 1,
+    userName: "susan",
+    customerName: "Suraj",
+    displayName: 30,
+    createdDate: "Gujrat",
+    lastLogin: "98-09-99",
+    className: "MuiTableCell-root",
+  },
+  {
+    id: 2,
+    userName: "Raj",
+    customerName: "Raj",
+    displayName: 30,
+    createdDate: "Gujrat",
+    lastLogin: "98-09-99",
+    className: "MuiTableCell-root",
+  },
+  {
+    id: 3,
+    userName: "Shekar",
+    customerName: "Suraj",
+    displayName: 30,
+    createdDate: "Gujrat",
+    lastLogin: "98-09-99",
+    className: "MuiTableCell-root",
+  },
+  {
+    id: 4,
+    userName: "Sai",
+    customerName: "Suraj",
+    displayName: 30,
+    createdDate: "Gujrat",
+    lastLogin: "98-09-99",
+    className: "MuiTableCell-root",
+  },
+  {
+    id: 5,
+    userName: "susan",
+    customerName: "Suraj",
+    displayName: 30,
+    createdDate: "Gujrat",
+    lastLogin: "98-09-99",
+    className: "MuiTableCell-root",
+  },
+  {
+    id: 6,
+    userName: "susan",
+    customerName: "Suraj",
+    displayName: 30,
+    createdDate: "Gujrat",
+    lastLogin: "98-09-99",
+    className: "MuiTableCell-root",
+  },
+  // Add more objects as needed
 ];
 
 export default function UserList() {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [searchText, setSearchText] = useState("");
+  const [selectedUserName, setSelectedUserName] = useState("");
+  const [selectedUnlockUserName, setSelectedUnlockUserName] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const [openUnlock, setOpenUnlock] = useState(false);
 
+  const handleOpen = (userName) => {
+    setSelectedUserName(userName);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleUnlockOpen = (userName) => {
+    setSelectedUnlockUserName(userName);
+    setOpenUnlock(true);
+  };
+  const handleCloseUnlock = () => {
+    setOpenUnlock(false);
+  };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -200,10 +155,6 @@ export default function UserList() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchText(event.target.value);
   };
 
   return (
@@ -237,14 +188,13 @@ export default function UserList() {
               <TextField
                 label="Search"
                 value={searchText}
-                onChange={handleSearchChange}
                 variant="outlined"
                 size="small"
                 InputProps={{
-                  startAdornment: (
-                    <endAdornment>
-                      <SearchIcon />
-                    </endAdornment>
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <SearchOutlinedIcon />
+                    </InputAdornment>
                   ),
                 }}
               />
@@ -258,68 +208,188 @@ export default function UserList() {
           </>
         </div>
       </div>
-
-      <Paper sx={{ width: "95%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
+      <Paper style={{ width: "auto", overflow: "hidden" }}>
+        <TableContainer style={{ maxHeight: "440px", margin: "5px" }}>
           <Table stickyHeader aria-label="sticky table">
-            <TableHead>
+            <TableHead className="table-head">
               <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    sx={{ py: 2 }}
-                    style={{
-                      minWidth: column.minWidth,
-                      backgroundColor: "#f9f9f9",
-                    }}
-                  >
-                    <strong>{column.label}</strong>
-                  </TableCell>
-                ))}
+                <TableCell className="table-header-cell">UserName</TableCell>
+                <TableCell className="table-header-cell">
+                  CustomerName
+                </TableCell>
+                <TableCell className="table-header-cell">DisplayName</TableCell>
+                <TableCell className="table-header-cell">CreatedDate</TableCell>
+                <TableCell className="table-header-cell">LastLogin</TableCell>
+                <TableCell className="table-header-cell">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.code}
-                    >
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            sx={{ py: 0.5 }}
+              {tableData.map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell className="MuiTableCell-root">
+                    {row.userName}
+                  </TableCell>
+                  <TableCell className="MuiTableCell-root">
+                    {row.customerName}
+                  </TableCell>
+                  <TableCell className="MuiTableCell-root">
+                    {row.displayName}
+                  </TableCell>
+                  <TableCell className="MuiTableCell-root">
+                    {row.createdDate}
+                  </TableCell>
+                  <TableCell className="MuiTableCell-root">
+                    {row.lastLogin}
+                  </TableCell>
+                  <TableCell>
+                    <div>
+                      <Link to="/users/createuser">
+                        <button className="btn btn-outline-danger btn-sm">
+                          Update
+                        </button>
+                      </Link>
+
+                      <span
+                        style={{
+                          borderLeft: "2px solid gray",
+                          padding: "7px",
+                          marginLeft: "12px",
+                        }}
+                      ></span>
+                      <button
+                        onClick={() => handleOpen(row.userName)}
+                        className="btn btn-outline-danger btn-sm me-1"
+                      >
+                        Deactivate
+                      </button>
+                      <BootstrapDialog
+                        onClose={handleClose}
+                        aria-labelledby="customized-dialog-title"
+                        open={open}
+                      >
+                        <BootstrapDialogTitle
+                          id="customized-dialog-title"
+                          onClose={handleClose}
+                          style={{ color: "#278bce" }}
+                        >
+                          <h5 style={{ fontFamily: "cursive" }}>
+                            Deactivated User
+                          </h5>
+                        </BootstrapDialogTitle>
+                        <DialogContent dividers>
+                          <Typography gutterBottom>
+                            <h6 style={{ fontFamily: "cursive" }}>
+                              Do you want to Deactivate the &nbsp;
+                              <strong>{selectedUserName}</strong>
+                            </h6>
+                          </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            style={{
+                              backgroundColor: "#f2880b",
+                              color: "#fff",
+                              fontFamily: "cursive",
+                            }}
+                            autoFocus
+                            onClick={handleClose}
                           >
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
+                            Cancel
+                          </Button>
+                          <Button
+                            style={{
+                              backgroundColor: "#f2880b",
+                              color: "#fff",
+                              fontFamily: "cursive",
+                            }}
+                            autoFocus
+                            onClick={handleClose}
+                          >
+                            Save
+                          </Button>
+                        </DialogActions>
+                      </BootstrapDialog>
+                      <span
+                        style={{
+                          borderLeft: "2px solid gray",
+                          padding: "7px",
+                          marginLeft: "12px",
+                        }}
+                      ></span>
+                      <button
+                        onClick={() => handleUnlockOpen(row.userName)}
+                        className="btn btn-outline-danger btn-sm me-2"
+                      >
+                        Unlock
+                      </button>
+                      <BootstrapDialog
+                        onClose={handleCloseUnlock}
+                        aria-labelledby="customized-dialog-title"
+                        open={openUnlock}
+                      >
+                        <BootstrapDialogTitle
+                          id="customized-dialog-title"
+                          onClose={handleCloseUnlock}
+                          style={{ color: "#278bce" }}
+                        >
+                          <h5 style={{ fontFamily: "cursive" }}>Unlock User</h5>
+                        </BootstrapDialogTitle>
+                        <DialogContent dividers>
+                          <Typography gutterBottom>
+                            <h6 style={{ fontFamily: "cursive" }}>
+                              Do you want to Unlock the &nbsp;
+                              <strong>{selectedUnlockUserName}</strong>
+                            </h6>
+                          </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            style={{
+                              backgroundColor: "#f2880b",
+                              color: "#fff",
+                              fontFamily: "cursive",
+                            }}
+                            autoFocus
+                            onClick={handleCloseUnlock}
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            style={{
+                              backgroundColor: "#f2880b",
+                              color: "#fff",
+                              fontFamily: "cursive",
+                            }}
+                            autoFocus
+                            onClick={handleCloseUnlock}
+                          >
+                            Save
+                          </Button>
+                        </DialogActions>
+                      </BootstrapDialog>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
+        <br />
         <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
+          className="css-16c50h-MuiInputBase-root-MuiTablePagination-select css-levciy-MuiTablePagination-displayedRows  "
+          rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={tableData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <br />
       <PermanentDrawer />
     </>
   );

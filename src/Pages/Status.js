@@ -1,3 +1,4 @@
+import "../Pages/Status.css";
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
@@ -20,6 +21,15 @@ import TableRow from "@mui/material/TableRow";
 import Autocomplete from "@mui/material/Autocomplete";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { Link } from "react-router-dom";
+import Rederbtn from "../components/Rederbtn";
+import SearchIcon from "@mui/icons-material/Search";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import Checkbox from "@mui/material/Checkbox";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const columns = [
   {
@@ -68,66 +78,34 @@ const rows = [
     "abc",
     "06/02/2020",
     "20/07/2021",
-    "abc",
+    "Mindpath-cashManagement",
     "loremcsdccxc",
-    <span>
-      <Button size="small" color="error">
-        Update
-      </Button>
-      <span style={{ borderLeft: "2px solid gray" }}></span>
-      <Button size="small" color="error">
-        Deactivate
-      </Button>
-      <span style={{ borderLeft: "2px solid gray" }}></span>
-      <Button size="small" color="error">
-        Delete
-      </Button>
-    </span>
+    <Rederbtn />
+  ),
+  createData(
+    "xyz",
+    "06/02/2019",
+    "20/07/2020",
+    "Mercy-Denials",
+    "loremcsdccxc",
+    <Rederbtn />
   ),
   createData(
     "abc",
-    "06/02/2020",
-    "20/07/2021",
-    "abclorem",
+    "06/02/2019",
+    "20/04/2020",
+    "Yale-CashPosting",
     "loremcsdccxc",
-    <span>
-      <Button size="small" color="error">
-        Update
-      </Button>
-      <span style={{ borderLeft: "2px solid gray" }}></span>
-      <Button size="small" color="error">
-        Deactivate
-      </Button>
-      <span style={{ borderLeft: "2px solid gray" }}></span>
-      <Button size="small" color="error">
-        Delete
-      </Button>
-    </span>
-  ),
-  createData(
-    "abc",
-    "06/02/2020",
-    "20/07/2021",
-    "abc",
-    "loremcsdccxc",
-    <span>
-      <Button size="small" color="error">
-        Update
-      </Button>
-      <span style={{ borderLeft: "2px solid gray" }}></span>
-      <Button size="small" color="error">
-        Deactivate
-      </Button>
-      <span style={{ borderLeft: "2px solid gray" }}></span>
-      <Button size="small" color="error">
-        Delete
-      </Button>
-    </span>
+    <Rederbtn />
   ),
 ];
 export default function Status() {
   const [selectedValue, setSelectedValue] = useState("");
   const [description, setDescription] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
+  };
 
   const options = [
     { value: "Mindpath-cashManagement", label: "Mindpath-cashManagement" },
@@ -147,14 +125,10 @@ export default function Status() {
     { value: "Quality-ev", label: "Quality-ev" },
   ];
 
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-  };
-
   //table
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -188,6 +162,7 @@ export default function Status() {
           </Link>
         </Breadcrumbs>
       </div>
+
       <Box
         component="form"
         sx={{
@@ -198,69 +173,119 @@ export default function Status() {
       >
         <Grid container>
           <Grid item xs={6}>
-            <FormControl
-              variant="standard"
-              sx={{ width: 500, marginTop: "10px" }}
-            >
-              <TextField id="title" name="title" label="Title*" />
-            </FormControl>
-
-            <FormControl sx={{ width: 500 }} style={{ marginTop: "20px" }}>
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={options}
-                // sx={{ width: 300 }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Audience" />
-                )}
-              />
-            </FormControl>
-
-            <FormControl
-              variant="standard"
-              sx={{ width: 500, marginTop: "10px", height: "20px" }}
-            >
-              <TextField
-                label="Description"
-                multiline
-                rows={2}
-                // value={description}
-                onChange={handleChange}
-                variant="outlined"
-                fullWidth
-              />
-            </FormControl>
+            <Grid item>
+              <FormControl
+                variant="standard"
+                sx={{ width: 500, marginTop: "10px" }}
+              >
+                <TextField
+                  id="title"
+                  name="title"
+                  size="small"
+                  label="Title*"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl
+                size="small"
+                sx={{ width: 500 }}
+                style={{ marginTop: "20px" }}
+              >
+                <Autocomplete
+                  disablePortal
+                  Select
+                  labelId="demo-multiple-checkbox-label"
+                  id="demo-multiple-checkbox"
+                  multiple
+                  disableCloseOnSelect
+                  getOptionLabel={(option) => option.label}
+                  size="small"
+                  options={options}
+                  renderOption={(props, option, { selected }) => (
+                    <li {...props}>
+                      <Checkbox
+                        icon={icon}
+                        checkedIcon={checkedIcon}
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                      />
+                      {option.label}
+                    </li>
+                  )}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Audience" />
+                  )}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl
+                variant="standard"
+                sx={{ width: 500, marginTop: "20px", height: "20px" }}
+              >
+                <TextField
+                  label="Description"
+                  multiline
+                  rows={1}
+                  // value={description}
+                  onChange={(event) => setSelectedValue(event.target.value)}
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                />
+              </FormControl>
+            </Grid>
           </Grid>
           <Grid item xs={6}>
-            <FormControl sx={{ width: 500 }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer
-                  components={["DateRangePicker"]}
-                  sx={{ display: "flex" }}
-                >
-                  <DemoItem label="Date Range" component="DateRangePicker">
-                    <DateRangePicker
-                      localeText={{ start: "From", end: "To" }}
-                    />
-                  </DemoItem>
-                </DemoContainer>
-              </LocalizationProvider>
-            </FormControl>
+            <Grid item>
+              <FormControl size="small" sx={{ width: 500 }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DateRangePicker"]}>
+                    <DemoItem component="DateRangePicker">
+                      <DateRangePicker
+                        slotProps={{ textField: { size: "small" } }}
+                        localeText={{ start: "From Date", end: "To Date" }}
+                      />
+                    </DemoItem>
+                  </DemoContainer>
+                </LocalizationProvider>
+              </FormControl>
+            </Grid>
           </Grid>
-
-          <Grid item xs={6}></Grid>
         </Grid>
         <div style={{ float: "right" }}>
-          <Button variant="contained" sx={{ backgroundColor: "#ff3d00" }}>
-            Save
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: "#ff3d00", margin: "20px" }}
-          >
-            Cancle
-          </Button>
+          <Grid container spacing={2} alignItems="center" />
+          <Grid item>
+            <Grid item sx={{ margin: "20px" }}>
+              <div style={{ float: "right", marginBottom: "30px" }}>
+                <TextField
+                  label="Search"
+                  value={searchText}
+                  onChange={handleSearchChange}
+                  variant="outlined"
+                  size="small"
+                  sx={{ marginRight: "10px" }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment>
+                        <IconButton>
+                          <SearchIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <button
+                  className="btn btn-outline-danger"
+                  style={{ marginRight: "10px" }}
+                >
+                  Save
+                </button>
+                <button className="btn btn-outline-danger">Cancle</button>
+              </div>
+            </Grid>
+          </Grid>
         </div>
       </Box>
 
@@ -315,14 +340,16 @@ export default function Status() {
               </TableBody>
             </Table>
           </TableContainer>
+          {/* {rows.length == 0 ? <div style={{ textAlign: "center", color: "red", margin: "20px" }}>There is no data to display</div> : ''} */}
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[5, 10, 15, 20, 25, 50, 100]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+            sx={{ display: "flex" }}
           />
         </Paper>
       </Box>

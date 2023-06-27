@@ -18,7 +18,7 @@ import Modal from "@mui/material/Modal";
 
 const style = {
   position: "absolute",
-  top: "5%",
+  top: "58%",
   left: "89%",
   transform: "translate(-50%, -50%)",
   width: 300,
@@ -87,7 +87,7 @@ export default function PermanentDrawer() {
         >
           <Toolbar />
           <Divider />
-          <List sx={{ backgroundColor: "rgb(52,152,219)", height: "100vh" }}>
+          <List sx={{ backgroundColor: "#f9f9f9", height: "100vh" }}>
             {SidebarItems.map((item, index) => (
               <ListItemButton
                 key={item.label}
@@ -103,7 +103,8 @@ export default function PermanentDrawer() {
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
-                    color: "white",
+
+                    color: "#16669c",
                   }}
                 >
                   {item.icon}

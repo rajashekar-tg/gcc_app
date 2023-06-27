@@ -184,7 +184,7 @@ export default function CustomerList() {
               ),
             }}
           />
-          <Link to="/users/createuser" style={{ marginLeft: "10px" }}>
+          <Link to="/users/createcustomer" style={{ marginLeft: "10px" }}>
             <button className="btn btn-outline-danger ">Create Customer</button>
           </Link>
         </div>

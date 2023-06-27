@@ -1,22 +1,125 @@
 import React, { useState } from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
+import { styled } from "@mui/material/styles";
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import { Select, MenuItem } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { Link } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import { Select, MenuItem } from "@mui/material";
+import { Button } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import Autocomplete from "@mui/material/Autocomplete";
+
+const Accordion = styled((props) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  "&:not(:last-child)": {
+    borderBottom: 0,
+  },
+  "&:before": {
+    display: "none",
+  },
+}));
+
+const AccordionSummary = styled((props) => (
+  <MuiAccordionSummary
+    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
+    {...props}
+  />
+))(({ theme }) => ({
+  backgroundColor:
+    theme.palette.mode === "dark"
+      ? "rgba(255, 255, 255, .05)"
+      : "rgba(0, 0, 0, .03)",
+  flexDirection: "row-reverse",
+  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+    transform: "rotate(90deg)",
+  },
+  "& .MuiAccordionSummary-content": {
+    marginLeft: theme.spacing(1),
+  },
+}));
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: "1px solid rgba(0, 0, 0, .125)",
+}));
 
 export default function MyProfile() {
+  const [expanded, setExpanded] = React.useState("panel1");
+
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
   const [selectedValue, setSelectedValue] = useState("");
 
+  const options = [
+    {
+      value: "What is your favorite color ?",
+      label: "What is your favorite color ?",
+    },
+    {
+      value: "What is the name of your first beach visited ?",
+      label: "What is the name of your first beach visited ?",
+    },
+    {
+      value: "What is your mother maiden Name ?",
+      label: "What is your mother maiden Name ?",
+    },
+    {
+      value: "What is your favorite movie ?",
+      label: "What is your favorite movie ?",
+    },
+    {
+      value: "What street did you grow up on ?",
+      label: "What street did you grow up on ?",
+    },
+    {
+      value: "What is the name of the place your wedding reception was held ?",
+      label: "What is the name of the place your wedding reception was held ?",
+    },
+    {
+      value: "What is the name of the first beach you visited ?",
+      label: "What is the name of the first beach you visited ?",
+    },
+    {
+      value: "In what city or town did you meet your spouse/partner ?",
+      label: "In what city or town did you meet your spouse/partner ?",
+    },
+    {
+      value: "What was the make and model of your first car ?",
+      label: "What was the make and model of your first car ?",
+    },
+    {
+      value: "In what city or town does your nearest sibling live ?",
+      label: "In what city or town does your nearest sibling live ?",
+    },
+    {
+      value:
+        "What was the name of your first stuffed animal or doll or action figure ?",
+      label:
+        "What was the name of your first stuffed animal or doll or action figure ?",
+    },
+    {
+      value: "What was your favorite place to visit as a child ?",
+      label: "What was your favorite place to visit as a child ?",
+    },
+    {
+      value: "What is the country of your ultimate dream vacation ?",
+      label: "What is the country of your ultimate dream vacation ?",
+    },
+    {
+      value: "What is the name of your favorite childhood teacher ?",
+      label: "What is the name of your favorite childhood teacher ?",
+    },
+  ];
   return (
     <div>
       <div role="presentation" style={{ margin: "20px" }}>
@@ -41,13 +144,11 @@ export default function MyProfile() {
           </Link>
         </Breadcrumbs>
       </div>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-          sx={{ backgroundColor: "rgb(236,236,236)" }}
-        >
+      <Accordion
+        expanded={expanded === "panel1"}
+        onChange={handleChange("panel1")}
+      >
+        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           <Typography>Personal Details</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -69,6 +170,7 @@ export default function MyProfile() {
                     id="firstName"
                     name="firstName"
                     label="First Name*"
+                    size="small"
                   />
                 </FormControl>
               </Grid>
@@ -77,7 +179,12 @@ export default function MyProfile() {
                   variant="standard"
                   sx={{ width: 500, marginTop: "10px" }}
                 >
-                  <TextField id="lastName" name="lastName" label="Last Name*" />
+                  <TextField
+                    id="lastName"
+                    name="lastName"
+                    size="small"
+                    label="Last Name*"
+                  />
                 </FormControl>
               </Grid>
               <Grid item xs={6}>
@@ -89,6 +196,7 @@ export default function MyProfile() {
                     id="displayName"
                     name="displayName"
                     label="Display Name*"
+                    size="small"
                   />
                 </FormControl>
               </Grid>
@@ -97,7 +205,12 @@ export default function MyProfile() {
                   variant="standard"
                   sx={{ width: 500, marginTop: "10px" }}
                 >
-                  <TextField id="email" name="email" label="Email ID*" />
+                  <TextField
+                    id="email"
+                    name="email"
+                    label="Email ID*"
+                    size="small"
+                  />
                 </FormControl>
               </Grid>
               <Grid item xs={6}>
@@ -109,31 +222,33 @@ export default function MyProfile() {
                     id="workNumber"
                     name="workNumber"
                     label="Work Number*"
+                    size="small"
                   />
                 </FormControl>
               </Grid>
             </Grid>
             <div style={{ float: "right" }}>
-              <Button variant="contained" sx={{ backgroundColor: "#ff3d00" }}>
+              <button
+                className="btn btn-outline-danger btn-sm"
+                style={{ margin: "10px" }}
+              >
                 Save
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ backgroundColor: "#ff3d00", margin: "20px" }}
+              </button>
+              <button
+                className="btn btn-outline-danger btn-sm"
+                style={{ margin: "10px" }}
               >
                 Cancle
-              </Button>
+              </button>
             </div>
           </Box>
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ marginTop: "20px" }}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-          sx={{ backgroundColor: "rgb(236,236,236)" }}
-        >
+      <Accordion
+        expanded={expanded === "panel2"}
+        onChange={handleChange("panel2")}
+      >
+        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
           <Typography>Credentials</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -151,6 +266,7 @@ export default function MyProfile() {
                   <TextField
                     id="oldPassword"
                     name="oldPassword"
+                    size="small"
                     label="Old Password*"
                   />
                 </FormControl>
@@ -160,6 +276,7 @@ export default function MyProfile() {
                   <TextField
                     id="newPassword"
                     name="newPassword"
+                    size="small"
                     label="New Password*"
                   />
                 </FormControl>
@@ -172,32 +289,34 @@ export default function MyProfile() {
                   <TextField
                     id="confirmNewPassword"
                     name="confirmNewPassword"
+                    size="small"
                     label="Confirm New Password*"
                   />
                 </FormControl>
               </Grid>
             </Grid>
             <div style={{ float: "right" }}>
-              <Button variant="contained" sx={{ backgroundColor: "#ff3d00" }}>
+              <button
+                className="btn btn-outline-danger btn-sm"
+                style={{ margin: "10px" }}
+              >
                 Save
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ backgroundColor: "#ff3d00", margin: "20px" }}
+              </button>
+              <button
+                className="btn btn-outline-danger btn-sm"
+                style={{ margin: "10px" }}
               >
                 Cancle
-              </Button>
+              </button>
             </div>
           </Box>
         </AccordionDetails>
       </Accordion>
-      <Accordion style={{ marginTop: "20px" }}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3a-content"
-          id="panel3a-header"
-          sx={{ backgroundColor: "rgb(236,236,236)" }}
-        >
+      <Accordion
+        expanded={expanded === "panel3"}
+        onChange={handleChange("panel3")}
+      >
+        <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
           <Typography>Security Questions</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -211,97 +330,101 @@ export default function MyProfile() {
           >
             <Grid container>
               <Grid item xs={6}>
-                <FormControl sx={{ width: 500 }}>
-                  <InputLabel>Question Number 1</InputLabel>
-                  <Select
-                    value={selectedValue}
-                    onChange={(event) => setSelectedValue(event.target.value)}
-                    sx={{ marginTop: "10px" }}
-                  >
-                    <MenuItem value="option1">
-                      What is your favorite color
-                    </MenuItem>
-                    <MenuItem value="option2">
-                      What is the name of your first beach visited
-                    </MenuItem>
-                    <MenuItem value="option3">
-                      What is your favorite color
-                    </MenuItem>
-                  </Select>
+                <FormControl size="small" sx={{ width: 500, m: 1 }}>
+                  <Autocomplete
+                    disablePortal
+                    Select
+                    labelId="securityQ1"
+                    id="security1_question"
+                    size="small"
+                    options={options}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        id="securityQ1"
+                        label="Question Number 1"
+                      />
+                    )}
+                  />
                 </FormControl>
 
-                <FormControl
-                  variant="standard"
-                  sx={{ width: 500, marginTop: "10px" }}
-                >
-                  <TextField id="answer" name="answer" label="answer*" />
+                <FormControl variant="standard" sx={{ width: 500, m: 1 }}>
+                  <TextField
+                    label="Answer"
+                    id="security1_answer"
+                    size="small"
+                  />
                 </FormControl>
               </Grid>
               <Grid item xs={6}>
-                <FormControl sx={{ width: 500 }}>
-                  <InputLabel>Question Number 2</InputLabel>
-                  <Select
-                    value={selectedValue}
-                    onChange={(event) => setSelectedValue(event.target.value)}
-                    sx={{ marginTop: "10px" }}
-                  >
-                    <MenuItem value="option1">
-                      What is your favorite color
-                    </MenuItem>
-                    <MenuItem value="option2">
-                      What is the name of your first beach visited
-                    </MenuItem>
-                    <MenuItem value="option3">
-                      What is your favorite color
-                    </MenuItem>
-                  </Select>
+                <FormControl size="small" sx={{ width: 500, m: 1 }}>
+                  <Autocomplete
+                    disablePortal
+                    Select
+                    labelId="securityQ2"
+                    id="security2_question"
+                    size="small"
+                    options={options}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        id="securityQ2"
+                        label="Question Number 2"
+                      />
+                    )}
+                  />
                 </FormControl>
 
-                <FormControl
-                  variant="standard"
-                  sx={{ width: 500, marginTop: "10px" }}
-                >
-                  <TextField id="answer" name="answer" label="answer*" />
+                <FormControl variant="standard" sx={{ width: 500, m: 1 }}>
+                  <TextField
+                    label="Answer"
+                    id="security2_answer"
+                    size="small"
+                  />
                 </FormControl>
               </Grid>
+
               <Grid item xs={6}>
-                <FormControl sx={{ width: 500 }} style={{ marginTop: "20px" }}>
-                  <InputLabel>Question Number 3</InputLabel>
-                  <Select
-                    value={selectedValue}
-                    onChange={(event) => setSelectedValue(event.target.value)}
-                    sx={{ marginTop: "10px" }}
-                  >
-                    <MenuItem value="option1">
-                      What is your favorite color
-                    </MenuItem>
-                    <MenuItem value="option2">
-                      What is the name of your first beach visited
-                    </MenuItem>
-                    <MenuItem value="option3">
-                      What is your favorite color
-                    </MenuItem>
-                  </Select>
+                <FormControl size="small" sx={{ width: 500, m: 1 }}>
+                  <Autocomplete
+                    disablePortal
+                    Select
+                    labelId="securityQ3"
+                    id="security3_question"
+                    size="small"
+                    options={options}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        id="securityQ3"
+                        label="Question Number 3"
+                      />
+                    )}
+                  />
                 </FormControl>
 
-                <FormControl
-                  variant="standard"
-                  sx={{ width: 500, marginTop: "10px" }}
-                >
-                  <TextField id="answer" name="answer" label="answer*" />
+                <FormControl variant="standard" sx={{ width: 500, m: 1 }}>
+                  <TextField
+                    label="Answer"
+                    id="security3_answer"
+                    size="small"
+                  />
                 </FormControl>
               </Grid>
             </Grid>
             <div style={{ float: "right" }}>
-              <Button variant="contained" sx={{ backgroundColor: "#ff3d00" }}>
+              <button
+                className="btn btn-outline-danger btn-sm"
+                style={{ margin: "10px" }}
+              >
                 Save
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ backgroundColor: "#ff3d00", margin: "20px" }}
+              </button>
+              <button
+                className="btn btn-outline-danger btn-sm"
+                style={{ margin: "10px" }}
               >
                 Cancle
-              </Button>
+              </button>
             </div>
           </Box>
         </AccordionDetails>

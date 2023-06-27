@@ -1,37 +1,202 @@
-import React, { useState } from "react";
-import {
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  Typography,
-  Card,
-  CardContent,
-  Divider,
-  Box,
-  TextField,
-  Autocomplete,
-  Checkbox,
-} from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import * as React from "react";
+import PropTypes from "prop-types";
+import { styled } from "@mui/material/styles";
+import Stack from "@mui/material/Stack";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Check from "@mui/icons-material/Check";
 import SettingsIcon from "@mui/icons-material/Settings";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import VideoLabelIcon from "@mui/icons-material/VideoLabel";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import AddIcon from "@mui/icons-material/Add";
+import {
+  Autocomplete,
+  Box,
+  Card,
+  CardContent,
+  Checkbox,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import StepConnector, {
+  stepConnectorClasses,
+} from "@mui/material/StepConnector";
+import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 
-const steps = ["User Creation", "User Roles", "Message"];
-const icons = [<SettingsIcon />, <GroupAddIcon />, <VideoLabelIcon />];
+// const QontoConnector = styled(StepConnector)(({ theme }) => ({
+//   [`&.${stepConnectorClasses.alternativeLabel}`]: {
+//     top: 10,
+//     left: "calc(-50% + 16px)",
+//     right: "calc(50% + 16px)",
+//   },
+//   [`&.${stepConnectorClasses.active}`]: {
+//     [`& .${stepConnectorClasses.line}`]: {
+//       borderColor: "#784af4",
+//     },
+//   },
+//   [`&.${stepConnectorClasses.completed}`]: {
+//     [`& .${stepConnectorClasses.line}`]: {
+//       borderColor: "#784af4",
+//     },
+//   },
+//   [`& .${stepConnectorClasses.line}`]: {
+//     borderColor:
+//       theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
+//     borderTopWidth: 3,
+//     borderRadius: 1,
+//   },
+// }));
 
-const CreateUser = () => {
-  const [activeStep, setActiveStep] = useState(0);
+const QontoStepIconRoot = styled("div")(({ theme, ownerState }) => ({
+  color: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#eaeaf0",
+  display: "flex",
+  height: 22,
+  alignItems: "center",
+  ...(ownerState.active && {
+    color: "#784af4",
+  }),
+  "& .QontoStepIcon-completedIcon": {
+    color: "#784af4",
+    zIndex: 1,
+    fontSize: 18,
+  },
+  "& .QontoStepIcon-circle": {
+    width: 8,
+    height: 8,
+    borderRadius: "50%",
+    backgroundColor: "currentColor",
+  },
+}));
+
+function QontoStepIcon(props) {
+  const { active, completed, className } = props;
+
+  return (
+    <QontoStepIconRoot ownerState={{ active }} className={className}>
+      {completed ? (
+        <Check className="QontoStepIcon-completedIcon" />
+      ) : (
+        <div className="QontoStepIcon-circle" />
+      )}
+    </QontoStepIconRoot>
+  );
+}
+
+QontoStepIcon.propTypes = {
+  /**
+   * Whether this step is active.
+   * @default false
+   */
+  active: PropTypes.bool,
+  className: PropTypes.string,
+  /**
+   * Mark the step as completed. Is passed to child components.
+   * @default false
+   */
+  completed: PropTypes.bool,
+};
+
+const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
+  [`&.${stepConnectorClasses.alternativeLabel}`]: {
+    top: 22,
+  },
+  [`&.${stepConnectorClasses.active}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      backgroundImage:
+        "linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)",
+    },
+  },
+  [`&.${stepConnectorClasses.completed}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      backgroundImage:
+        "linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)",
+    },
+  },
+  [`& .${stepConnectorClasses.line}`]: {
+    height: 3,
+    border: 0,
+    backgroundColor:
+      theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
+    borderRadius: 1,
+  },
+}));
+
+const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
+  backgroundColor:
+    theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
+  zIndex: 1,
+  color: "#fff",
+  width: 50,
+  height: 50,
+  display: "flex",
+  borderRadius: "50%",
+  justifyContent: "center",
+  alignItems: "center",
+  ...(ownerState.active && {
+    backgroundImage:
+      "linear-gradient( 136deg, rgb(236,119,35) 0%, rgb(236,119,35) 50%, rgb(138,35,135) 100%)",
+    boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
+  }),
+  ...(ownerState.completed && {
+    backgroundImage:
+      "linear-gradient( 136deg, rgb(236,119,35) 0%, rgb(236,119,35) 50%, rgb(138,35,135) 100%)",
+  }),
+}));
+
+function ColorlibStepIcon(props) {
+  const { active, completed, className } = props;
+
+  const icons = {
+    1: <SettingsIcon />,
+    2: <GroupAddIcon />,
+  };
+
+  return (
+    <ColorlibStepIconRoot
+      ownerState={{ completed, active }}
+      className={className}
+    >
+      {icons[String(props.icon)]}
+    </ColorlibStepIconRoot>
+  );
+}
+
+ColorlibStepIcon.propTypes = {
+  /**
+   * Whether this step is active.
+   * @default false
+   */
+  active: PropTypes.bool,
+  className: PropTypes.string,
+  /**
+   * Mark the step as completed. Is passed to child components.
+   * @default false
+   */
+  completed: PropTypes.bool,
+  /**
+   * The label displayed in the step icon.
+   */
+  icon: PropTypes.node,
+};
+
+const steps = ["User Creation", "User Roles"];
+
+export default function CreateUser() {
+  const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
-    setActiveStep((prevStep) => prevStep + 1);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
-    setActiveStep((prevStep) => prevStep - 1);
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   return (
@@ -66,93 +231,73 @@ const CreateUser = () => {
       </div>
       <Card
         sx={{
-          width: "90%",
+          width: "100%",
           marginLeft: "10px",
           marginTop: "35px",
-          height: "500px",
+          height: "45 0px",
+          textAlign: "left",
         }}
       >
-        <CardContent
-          sx={{ fontSize: 14, backgroundColor: "#f5f5f5", height: "12vh" }}
-          color="text.secondary"
-          gutterBottom
-        >
-          <Stepper
-            activeStep={activeStep}
-            alternativeLabel
-            style={{ marginLeft: "-130px", width: "100%" }}
+        <Stack sx={{ width: "auto" }} spacing={2}>
+          <CardContent
+            sx={{
+              fontSize: 14,
+              backgroundColor: "#f5f5f5",
+              height: "auto",
+            }}
+            color="text.secondary"
+            gutterBottom
           >
-            {steps.map((label, index) => (
-              <Step key={label}>
-                <StepLabel
-                  StepIconComponent={() =>
-                    activeStep > index ? (
-                      <CheckCircleIcon color="primary" />
-                    ) : (
-                      icons[index]
-                    )
-                  }
-                >
-                  {label}
-                </StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-        </CardContent>
-        <Divider sx={{ bgcolor: "secondary.light" }} />
-
-        <div>
-          {activeStep === steps.length ? (
-            <Typography variant="h5" sx={{ mt: 7 }}>
-              User Created Successfully!!!.
-            </Typography>
-          ) : (
-            <div style={{ marginLeft: "auto" }}>
-              {/* Render form components based on the active step */}
-              {activeStep === 0 && <Step1Form />}
-              {activeStep === 1 && <Step2Form />}
-              {activeStep === 2 && <Step3Form />}
-              {/* Buttons for navigating between steps */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  marginTop: "20px",
-                }}
-              >
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{
-                    marginRight: "30px",
-                    backgroundColor: "#ff3d00",
-                    color: "white",
-                  }}
-                >
-                  {activeStep === steps.length - 1 ? "Submit" : "Save & Next"}
-                </Button>
-                <Button
-                  variant="contained"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  style={{
-                    marginRight: "70px",
-                    backgroundColor: "#ff3d00",
-                    color: "white",
-                  }}
-                >
-                  Back
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
+            <Stepper
+              alternativeLabel
+              activeStep={activeStep}
+              connector={<ColorlibConnector />}
+              style={{ width: "60%", marginLeft: "-150px" }}
+            >
+              {steps.map((label, index) => (
+                <Step key={label}>
+                  <StepLabel StepIconComponent={ColorlibStepIcon}>
+                    {label}
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </CardContent>
+          <div>
+            {activeStep === 0 && <Step1Form />}
+            {activeStep === 1 && <Step2Form />}
+          </div>
+          <Stack
+            direction="row"
+            spacing={2}
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginBottom: "50px",
+            }}
+          >
+            <Button
+              // disabled={activeStep === steps.length - 1}
+              onClick={handleNext}
+              variant="contained"
+            >
+              Save & Next
+            </Button>
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              variant="contained"
+              style={{ marginRight: "150px" }}
+            >
+              Back
+            </Button>
+          </Stack>
+        </Stack>
       </Card>
     </>
   );
-};
+}
 
-// Step 1 form component
 const Step1Form = () => {
   //1 st form
   const [selectedUserType, setSelectedUserType] = useState(null);
@@ -166,6 +311,7 @@ const Step1Form = () => {
       <div className="mt-4 mx-3 d-flex">
         <Autocomplete
           disablePortal
+          size="small"
           id="combo-box-demo"
           options={userTypes}
           sx={{ width: 300 }}
@@ -177,6 +323,7 @@ const Step1Form = () => {
         />
         <Autocomplete
           disablePortal
+          size="small"
           id="combo-box-demo"
           options={companyNames}
           sx={{ width: 300, marginLeft: "14px" }}
@@ -205,9 +352,24 @@ const Step1Form = () => {
         noValidate
         autoComplete="off"
       >
-        <TextField id="outlined-basic" label="First Name" variant="outlined" />
-        <TextField id="outlined-basic" label="Middle Name" variant="outlined" />
-        <TextField id="outlined-basic" label="Last Name" variant="outlined" />
+        <TextField
+          id="outlined-basic"
+          label="First Name"
+          variant="outlined"
+          size="small"
+        />
+        <TextField
+          id="outlined-basic"
+          label="Middle Name"
+          variant="outlined"
+          size="small"
+        />
+        <TextField
+          id="outlined-basic"
+          label="Last Name"
+          variant="outlined"
+          size="small"
+        />
       </Box>
       <Box
         className="mx-2 mt-2"
@@ -218,17 +380,29 @@ const Step1Form = () => {
         noValidate
         autoComplete="off"
       >
-        <TextField id="outlined-basic" label="Email Id" variant="outlined" />
+        <TextField
+          id="outlined-basic"
+          label="Email Id"
+          variant="outlined"
+          size="small"
+        />
         <TextField
           id="outlined-basic"
           label="Phone Number"
           variant="outlined"
+          size="small"
         />
-        <TextField id="outlined-basic" label="Address" variant="outlined" />
+        <TextField
+          id="outlined-basic"
+          label="Address"
+          variant="outlined"
+          size="small"
+        />
       </Box>
       <div className="mt-3 mx-3 d-flex">
         <Autocomplete
           id="country-select-demo"
+          size="small"
           sx={{ width: 300 }}
           options={countries}
           autoHighlight
@@ -263,6 +437,7 @@ const Step1Form = () => {
         <Autocomplete
           id="country-select-demo"
           sx={{ width: 300, marginLeft: "14px" }}
+          size="small"
           options={countries}
           autoHighlight
           getOptionLabel={(option) => option.label}
@@ -301,7 +476,12 @@ const Step1Form = () => {
           noValidate
           autoComplete="off"
         >
-          <TextField id="outlined-basic" label="Email Id" variant="outlined" />
+          <TextField
+            id="outlined-basic"
+            label="Email Id"
+            variant="outlined"
+            size="small"
+          />
         </Box>
       </div>
     </>
@@ -401,24 +581,141 @@ const companyNames = [
   { label: "Tek guru " },
   { label: "Cognitive " },
 ];
-// Step 2 form component
+
 const Step2Form = () => {
+  const [textFields, setTextFields] = useState([]);
+  const handleAddField = () => {
+    setTextFields([...textFields, { Product: "", Role: "" }]);
+  };
+  const handleInputChange = (index, field, value) => {
+    const updatedTextFields = [...textFields];
+    updatedTextFields[index][field] = value;
+    setTextFields(updatedTextFields);
+  };
+  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+  const checkedIcon = <CheckBoxIcon fontSize="small" />;
   return (
-    <div>
-      {/* Add your form fields here */}
-      <Typography variant="h5">Step 2</Typography>
-    </div>
+    <>
+      <Box
+        style={{
+          width: "55%",
+          height: "auto",
+          backgroundColor: "#f5f5f5",
+          display: "flex",
+          justifyContent: "flex-end",
+          marginLeft: "10px",
+          borderRadius: "10px",
+        }}
+      >
+        <IconButton>
+          <AddIcon
+            onClick={handleAddField}
+            style={{ color: "black", fontWeight: "bold" }}
+          />
+        </IconButton>
+      </Box>
+      <Box>
+        {textFields.map((fieldValues, index) => (
+          <Box
+            key={index}
+            style={{ display: "flex", marginLeft: "10px", marginTop: "20px" }}
+          >
+            {/* <Autocomplete
+              options={options}
+              getOptionLabel={(option) => option.label}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Product"
+                  variant="outlined"
+                  size="small"
+                />
+              )}
+              value={fieldValues.Product}
+              onChange={(event, value) =>
+                handleInputChange(index, "Product", value)
+              }
+            /> */}
+            <Autocomplete
+              disablePortal
+              size="small"
+              id="combo-box-demo"
+              options={companyNames}
+              sx={{ width: 330 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Select Product" />
+              )}
+            />
+            <Autocomplete
+              multiple
+              id="checkboxes-tags-demo"
+              size="small"
+              options={top100Films}
+              sx={{ marginLeft: "20px" }}
+              disableCloseOnSelect
+              getOptionLabel={(option) => option.title}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.title}
+                </li>
+              )}
+              style={{ width: 330 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Roles" placeholder="Roles" />
+              )}
+            />
+          </Box>
+        ))}
+      </Box>
+    </>
   );
 };
+const top100Films = [
+  { title: "The Shawshank Redemption", year: 1994 },
+  { title: "The Godfather", year: 1972 },
+  { title: "The Godfather: Part II", year: 1974 },
+  { title: "The Dark Knight", year: 2008 },
+  { title: "12 Angry Men", year: 1957 },
+  { title: "Schindler's List", year: 1993 },
+  { title: "Pulp Fiction", year: 1994 },
+  {
+    title: "The Lord of the Rings: The Return of the King",
+    year: 2003,
+  },
+  { title: "The Good, the Bad and the Ugly", year: 1966 },
+  { title: "Fight Club", year: 1999 },
+  {
+    title: "The Lord of the Rings: The Fellowship of the Ring",
+    year: 2001,
+  },
+  {
+    title: "Star Wars: Episode V - The Empire Strikes Back",
+    year: 1980,
+  },
+  { title: "Forrest Gump", year: 1994 },
+  { title: "Inception", year: 2010 },
+  {
+    title: "The Lord of the Rings: The Two Towers",
+    year: 2002,
+  },
+  { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
+  { title: "Goodfellas", year: 1990 },
+  { title: "The Matrix", year: 1999 },
+  { title: "Seven Samurai", year: 1954 },
+  {
+    title: "Star Wars: Episode IV - A New Hope",
+    year: 1977,
+  },
 
-// Step 3 form component
-const Step3Form = () => {
-  return (
-    <div>
-      {/* Add your form fields here */}
-      <Typography variant="h5">Step 3</Typography>
-    </div>
-  );
-};
-
-export default CreateUser;
+  {
+    title:
+      "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
+    year: 1964,
+  },
+];
