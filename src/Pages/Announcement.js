@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { AlertTitle, Button, Alert } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Select, MenuItem } from "@mui/material";
 
@@ -23,6 +24,8 @@ import TableRow from "@mui/material/TableRow";
 import Autocomplete from "@mui/material/Autocomplete";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { Link } from "react-router-dom";
+import RederButton from "../components/Rederbtn";
+
 const columns = [
   {
     id: "title",
@@ -91,26 +94,17 @@ const rows = [
     "01-30-2021",
     "yale-BAIPortal,YaleEpicAutomation",
     "Holidays",
+
     <span>
-      <button className="btn btn-outline-primary btn-sm">Edit</button>
-      <span
-        style={{
-          borderLeft: "2px solid gray",
-          padding: "7px",
-          marginLeft: "12px",
-        }}
-      ></span>
-      <button className="btn btn-outline-primary btn-sm">Deactivate</button>
-      <span
-        style={{
-          borderLeft: "2px solid gray",
-          padding: "7px",
-          marginLeft: "12px",
-        }}
-      ></span>
-      <button className="btn btn-outline-primary btn-sm">Delete</button>
+      <RederButton />
+      {/* <button className="btn btn-outline-danger btn-sm">Edit</button>
+      <span style={{ borderLeft: "2px solid gray", padding: "7px", marginLeft: "12px" }}></span>
+      <button className="btn btn-outline-danger btn-sm">Deactivate</button>
+      <span style={{ borderLeft: "2px solid gray", padding: "7px", marginLeft: "12px" }}></span>
+      <button className="btn btn-outline-danger btn-sm">Delete</button> */}
     </span>
   ),
+
   createData(
     "demo",
     "03-31-2022",
@@ -118,23 +112,13 @@ const rows = [
     "correspondence ",
     "Cashier",
     <span>
-      <button className="btn btn-outline-primary btn-sm">Edit</button>
-      <span
-        style={{
-          borderLeft: "2px solid gray",
-          padding: "7px",
-          marginLeft: "12px",
-        }}
-      ></span>
-      <button className="btn btn-outline-primary btn-sm">Deactivate</button>
-      <span
-        style={{
-          borderLeft: "2px solid gray",
-          padding: "7px",
-          marginLeft: "12px",
-        }}
-      ></span>
-      <button className="btn btn-outline-primary btn-sm">Delete</button>
+      <RederButton />
+      {/* <button className="btn btn-outline-danger btn-sm">Edit</button>
+     <span style={{ borderLeft: "2px solid gray", padding: "7px", marginLeft: "12px" }}></span>
+     
+     <button className="btn btn-outline-danger btn-sm">Deactivate</button>
+     <span style={{ borderLeft: "2px solid gray", padding: "7px", marginLeft: "12px" }}></span>
+      <button className="btn btn-outline-danger btn-sm">Delete</button> */}
     </span>
   ),
   createData(
@@ -144,23 +128,12 @@ const rows = [
     "Epic ",
     "cashier",
     <span>
-      <button className="btn btn-outline-primary btn-sm">Edit</button>
-      <span
-        style={{
-          borderLeft: "2px solid gray",
-          padding: "7px",
-          marginLeft: "12px",
-        }}
-      ></span>
-      <button className="btn btn-outline-primary btn-sm">Deactivate</button>
-      <span
-        style={{
-          borderLeft: "2px solid gray",
-          padding: "7px",
-          marginLeft: "12px",
-        }}
-      ></span>
-      <button className="btn btn-outline-primary btn-sm">Delete</button>
+      <RederButton />
+      {/* <button className="btn btn-outline-danger btn-sm">Edit</button>
+   <span style={{ borderLeft: "2px solid gray", padding: "7px", marginLeft: "12px" }}></span>
+   <button className="btn btn-outline-danger btn-sm">Deactivate</button>
+   <span style={{ borderLeft: "2px solid gray", padding: "7px", marginLeft: "12px" }}></span>
+   <button className="btn btn-outline-danger btn-sm">Delete</button> */}
     </span>
   ),
   createData(
@@ -170,27 +143,16 @@ const rows = [
     " Accomdation ",
     "some changes needed to develop",
     <span>
-      <button className="btn btn-outline-primary btn-sm">Edit</button>
-      <span
-        style={{
-          borderLeft: "2px solid gray",
-          padding: "7px",
-          marginLeft: "12px",
-        }}
-      ></span>
-      <button className="btn btn-outline-primary btn-sm">Deactivate</button>
-      <span
-        style={{
-          borderLeft: "2px solid gray",
-          padding: "7px",
-          marginLeft: "12px",
-        }}
-      ></span>
-      <button className="btn btn-outline-primary btn-sm">Delete</button>
+      <RederButton />
+      {/* <button className="btn btn-outline-danger btn-sm">Edit</button>
+   <span style={{ borderLeft: "2px solid gray", padding: "7px", marginLeft: "12px" }}></span>
+   <button className="btn btn-outline-danger btn-sm">Deactivate</button>
+   <span style={{ borderLeft: "2px solid gray", padding: "7px", marginLeft: "12px" }}></span>
+   <button className="btn btn-outline-danger btn-sm">Delete</button> */}
     </span>
   ),
 ];
-export default function Announcement() {
+export default function AddAnnouncements() {
   const [selectedValue, setSelectedValue] = useState("");
   const [description, setDescription] = useState("");
 
@@ -250,6 +212,7 @@ export default function Announcement() {
             aria-current="page"
             to="/users/announcements"
           >
+            {" "}
             Announcements
           </Link>
         </Breadcrumbs>
@@ -266,13 +229,16 @@ export default function Announcement() {
           <Grid item xs={6}>
             <FormControl
               variant="standard"
-              sx={{ width: 500, marginTop: "50px" }}
+              sx={{ width: 600, marginTop: "50px" }}
             >
-              <TextField id="title" name="title" label="Title*" />
+              <TextField id="title" name="title" label="Title*" size="small" />
             </FormControl>
           </Grid>
           <Grid item xs={6}>
-            <FormControl sx={{ width: 600 }} style={{ marginTop: "20px" }}>
+            <FormControl
+              sx={{ width: 600 }}
+              style={{ marginTop: "9px", height: "100px" }}
+            >
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer
                   components={["DateRangePicker"]}
@@ -289,14 +255,18 @@ export default function Announcement() {
           </Grid>
 
           <Grid item xs={6}>
-            <FormControl sx={{ width: 500 }} style={{ marginTop: "20px" }}>
+            <FormControl sx={{ width: 600 }} style={{ marginTop: "20px" }}>
               <Autocomplete
+                size="small"
                 disablePortal
-                id="combo-box-demo"
+                Select
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                multiple
                 options={options}
                 // sx={{ width: 300 }}
                 renderInput={(params) => (
-                  <TextField {...params} label="Audience" />
+                  <TextField {...params} label="Audience*" />
                 )}
               />
             </FormControl>
@@ -305,12 +275,13 @@ export default function Announcement() {
           <Grid item xs={6}>
             <FormControl
               variant="standard"
-              sx={{ width: 500, marginTop: "25px" }}
+              sx={{ width: 600, height: "15px", marginTop: "35px" }}
             >
               <TextField
                 id="Announcements Descriptions"
                 name="Announcements Descriptions"
                 label="Announcements Descriptions*"
+                size="small"
               />
             </FormControl>
           </Grid>
@@ -324,7 +295,7 @@ export default function Announcement() {
                 variant="outlined"
                 placeholder="Search"
                 size="small"
-                sx={{ width: 400, margin: "20px" }}
+                sx={{ width: 300, margin: "20px" }}
               />
               <Button variant="contained" sx={{ backgroundColor: "#ff3d00" }}>
                 Save
@@ -391,13 +362,14 @@ export default function Announcement() {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[5, 10, 25]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{ display: "flex" }}
           />
         </Paper>
       </Box>
